@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disk Scheduling Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="crt scanlines"></div>
+    <div class="container relative-z">
+        
+        <header class="game-header">
+            <h1 class="glitch" data-text="DISK SCHEDULER">DISK SCHEDULER</h1>
+            <p class="blink neon-text-pink">/// VISUALIZER ///</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar for Controls -->
+            <aside class="hud-panel border-cyan">
+                <h2 class="neon-text-cyan">> CONFIGURATION</h2>
+                
+                <div class="input-group">
+                    <label for="requestQueue">REQUEST QUEUE</label>
+                    <input type="text" id="requestQueue" class="arcade-input" placeholder="e.g. 98,183..." required value="98, 183, 37, 122, 14, 124, 65, 67">
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="initialHead">INITIAL HEAD</label>
+                        <input type="number" id="initialHead" class="arcade-input" placeholder="53" required min="0" value="53">
+                    </div>
+                    <div class="input-group">
+                        <label for="diskSize">DISK SIZE</label>
+                        <input type="number" id="diskSize" class="arcade-input" placeholder="200" required min="1" value="200">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="algorithmSelect">ALGORITHM</label>
+                    <select id="algorithmSelect" class="arcade-input">
+                        <option value="FCFS">FCFS</option>
+                        <option value="SSTF">SSTF</option>
+                        <option value="SCAN">SCAN</option>
+                        <option value="CSCAN">C-SCAN</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="directionGroup" style="display: none;">
+                    <label for="directionSelect">DIRECTION</label>
+                    <select id="directionSelect" class="arcade-input">
+                        <option value="right">RIGHT --></option>
+                        <option value="left"><-- LEFT</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="speedSlider">ANIMATION SPEED <span id="speedValue" class="neon-text-green">[5x]</span></label>
+                    <input type="range" id="speedSlider" class="arcade-slider" min="1" max="10" step="1" value="5">
+                </div>
+
+                <div id="errorContainer" class="arcade-input error" style="display: none; color: #ff3333; margin-top: 1rem; border-color: red; white-space: pre-wrap; font-size: 0.65rem;"></div>
+
+                <div class="button-group" style="margin-top: 1rem;">
+                    <button id="runBtn" class="arcade-btn btn-green">>> RUN SIMULATION</button>
+                    <button id="compareBtn" class="arcade-btn btn-pink">>> COMPARE ALL</button>
+                </div>
+            </aside>
+
+            <!-- Main area for visualization -->
+            <main class="visualization-area">
+                <!-- Single Algorithm View -->
+                <div id="simulationView" class="hud-panel border-pink">
+                    <div class="results-header">
+                        <h2 class="neon-text-pink">> SIMULATION <span id="currentAlgoBadge" class="algo-badge">[FCFS]</span></h2>
+                        <div class="live-head-position neon-text-cyan">
+                            HEAD: <span id="liveHeadValue" class="neon-text-green blink-fast">00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="stat-box border-green">
+                            <span class="stat-label neon-text-green">TOTAL SEEK TIME</span>
+                            <span class="stat-number neon-text-white" id="totalSeekTimeValue">0</span>
+                        </div>
+                        <div class="stat-box sequence-box border-cyan">
+                            <span class="stat-label neon-text-cyan">SEEK SEQUENCE</span>
+                            <div class="sequence-scroller" id="seekSequenceValue">AWAITING START...</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-wrapper border-cyan">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Comparison View -->
+                <div id="comparisonView" class="hud-panel border-pink" style="display: none;">
+                    <h2 class="neon-text-pink">> ALGORITHM COMPARISON</h2>
+                    
+                    <div class="chart-wrapper border-green">
+                        <canvas id="barChart"></canvas>
+                    </div>
+
+                    <div class="table-container border-cyan mt-4">
+                        <table id="comparisonTable" class="arcade-table">
+                            <thead>
+                                <tr>
+                                    <th>ALGORITHM</th>
+                                    <th>SEEK TIME</th>
+                                    <th>SEQUENCE LENGTH</th>
+                                    <th>THROUGHPUT</th>
+                                    <th>EFFICIENCY</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparisonTableBody">
+                                <!-- Data populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
