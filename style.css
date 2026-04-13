@@ -23,7 +23,7 @@ body {
     flex-direction: column;
 }
 
-/* CRT EFFECTS */
+
 .crt::before {
     content: " ";
     display: block;
@@ -50,7 +50,7 @@ body {
     z-index: 10;
 }
 
-/* TYPOGRAPHY */
+
 .neon-text-cyan { color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan); }
 .neon-text-pink { color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink); }
 .neon-text-green { color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green); }
@@ -63,7 +63,7 @@ body {
     50% { opacity: 0; }
 }
 
-/* LAYOUT */
+
 .container {
     max-width: 1400px;
     margin: 0 auto;
@@ -73,7 +73,7 @@ body {
     flex-direction: column;
 }
 
-/* HEADER GLITCH */
+
 .game-header {
     text-align: center;
     margin-bottom: 1.5rem;
@@ -102,7 +102,7 @@ h1.glitch {
     }
 }
 
-/* HUD PANELS */
+
 .hud-panel {
     background: rgba(10, 10, 16, 0.8);
     padding: 1rem 1.5rem;
@@ -121,7 +121,7 @@ h1.glitch {
     margin-bottom: 1rem;
 }
 
-/* FORMS */
+
 .input-group {
     margin-bottom: 0.8rem;
 }
@@ -181,7 +181,7 @@ label {
     cursor: pointer;
 }
 
-/* BUTTONS */
+
 .button-group {
     display: flex;
     flex-direction: column;
